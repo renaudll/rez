@@ -234,6 +234,20 @@ class LinuxPlatform(_UnixPlatform):
         if result:
             return result
 
+        # next, try parsing /etc/os-release (ex: Arch Linux)
+        # https://www.freedesktop.org/software/systemd/man/os-release.html
+        file = "/etc/os-release"
+        if os.path.isfile(file):
+            with open(file) as f:
+                txt = f.read()
+            distributor, release = _parse(txt,
+                                          "NAME=",
+                                          "VERSION=")
+            print distributor, release
+        result = _os()
+        if result:
+            return result
+
         # last, use python's dist detection. It is known to return incorrect
         # info on some systems though
         try:
