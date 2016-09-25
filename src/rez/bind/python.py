@@ -37,7 +37,7 @@ def post_commands():
 def bind(path, version_range=None, opts=None, parser=None):
     # find executable, determine version
     exepath = find_exe("python", opts.exe)
-    code = "import sys; print '.'.join(str(x) for x in sys.version_info)"
+    code = "import sys; print('.'.join(str(x) for x in sys.version_info))"
     version = extract_version(exepath, ["-c", code])
 
     check_version(version, version_range)
