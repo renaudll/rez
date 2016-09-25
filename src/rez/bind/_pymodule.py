@@ -30,7 +30,7 @@ def commands_with_bin():
 def copy_module(name, destpath):
     success, out, err = run_python_command(
         ["import %s" % name,
-         "print %s.__path__[0] if hasattr(%s, '__path__') else ''" % (name, name)])
+         "print(%s.__path__[0] if hasattr(%s, '__path__') else '')" % (name, name)])
 
     if out:
         srcpath = out
@@ -38,7 +38,7 @@ def copy_module(name, destpath):
     else:
         success, out, err = run_python_command(
             ["import %s" % name,
-             "print %s.__file__" % name])
+             "print(%s.__file__)" % name])
         if not success:
             raise RezBindError("Couldn't locate module %s: %s" % (name, err))
 
@@ -63,7 +63,7 @@ def bind(name, path, import_name=None, version_range=None, version=None,
         version = get_version_in_python(
             name,
             ["import %s" % import_name,
-             "print %s.__version__" % import_name])
+             "print(%s.__version__)" % import_name])
 
     check_version(version, version_range)
 

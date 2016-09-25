@@ -243,7 +243,6 @@ class LinuxPlatform(_UnixPlatform):
             distributor, release = _parse(txt,
                                           "NAME=",
                                           "VERSION=")
-            print distributor, release
         result = _os()
         if result:
             return result
